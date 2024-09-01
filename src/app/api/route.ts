@@ -5,7 +5,7 @@ type playerinfo = {
   name : String,
 }
 type playerlist = {
-  players : playerinfo,
+  players : playerinfo[],
 }
 
 export async function GET() {
@@ -19,9 +19,9 @@ export async function POST(req: Request, res: Response, ...prop : any[]) {
   
   const comment : playerlist = await req.json();
   const newcomment : playerinfo = {
-    id : comment.players.id + 1,
-    name: comment.players.name
+    id : comment.players[comment.players.length - 1].id + 1,
+    name: comment.players[comment.players.length - 1].name
   }
-
+  comment.players.push(newcomment);
   return Response.json(comment);
 }
